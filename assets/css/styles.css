@@ -1,0 +1,92 @@
+/* Variables */
+:root {
+    --font-family: "Roboto", sans-serif;
+    --normal-font: 400;
+    --bold-font: 700;
+    --bolder-font: 900;
+    --bg-color: #fcfcfc;
+    --primary-color: rgb(204, 118, 118);
+    --secondary-color: rgb(118, 118, 118);
+    --primary-shadow: #8b8eaf;
+    --secondary-shadow: #a17a69;
+  }
+    
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--secondary-color);
+    z-index: 2;
+}  
+
+h1 {
+    position: absolute;
+    top: 2vh;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 2vw; /* use vw since the squares also scale with vw */
+    z-index: inherit;
+}
+
+.content {
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+    top: 8vh;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 1vw; /* use vw since the squares also scale with vw */
+    z-index: inherit;
+}
+
+p {
+    font-size: 1vh;
+    margin: 1vh;
+}
+
+button {
+    height: 2vh;
+    width: 2vw;
+    font-size: 1vh;
+}
+
+.lives {
+    display: flex;
+    justify-content: center;
+    z-index: inherit;
+}
+
+.life {
+    width: 1.5vh;
+    height: 1.5vh;
+    align-self: center; /* so it appears inline with the "lives" text */
+    margin-left: 0.5vw;
+    border: 1px solid red;
+    background-color: red;
+    border-radius: 20%;
+    z-index: inherit;
+}
+
+.grid {
+    position: relative;
+    background: url(../icons/squares.png) 50% / cover;
+    width: 600px;
+    height: 600px;
+    z-index: 3;
+    pointer-events: none;
+}
+
