@@ -4,11 +4,10 @@
     --normal-font: 400;
     --bold-font: 700;
     --bolder-font: 900;
-    --bg-color: #fcfcfc;
-    --primary-color: rgb(204, 118, 118);
-    --secondary-color: rgb(118, 118, 118);
-    --primary-shadow: #8b8eaf;
-    --secondary-shadow: #a17a69;
+    --bg-color: #acacac;
+    --primary-color: rgb(118, 118, 118); /* text */
+    --secondary-color: #e65252; /* square and lives */
+    /*--grid-color: #2e75b6;*/
   }
     
 html {
@@ -28,17 +27,18 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background-color: var(--secondary-color);
+    background-color: var(--bg-color);
     z-index: 2;
 }  
 
 h1 {
     position: absolute;
-    top: 2vh;
+    top: 5vh;
     left: 50%;
     transform: translate(-50%);
     font-size: 2vw; /* use vw since the squares also scale with vw */
     z-index: inherit;
+    color: var(--primary-color);
 }
 
 .content {
@@ -46,7 +46,7 @@ h1 {
     justify-content: center;
     align-items: center;
     text-align:center;
-    top: 8vh;
+    top: 13vh;
     left: 50%;
     transform: translate(-50%);
     font-size: 1vw; /* use vw since the squares also scale with vw */
@@ -56,6 +56,7 @@ h1 {
 p {
     font-size: 1vh;
     margin: 1vh;
+    color: var(--primary-color);
 }
 
 button {
@@ -75,8 +76,8 @@ button {
     height: 1.5vh;
     align-self: center; /* so it appears inline with the "lives" text */
     margin-left: 0.5vw;
-    border: 1px solid red;
-    background-color: red;
+    border: 1px solid var(--secondary-color);
+    background-color: var(--secondary-color);
     border-radius: 20%;
     z-index: inherit;
 }
@@ -84,9 +85,17 @@ button {
 .grid {
     position: relative;
     background: url(../icons/squares.png) 50% / cover;
-    width: 600px;
-    height: 600px;
+    width: 40vh;
+    height: 40vh;
     z-index: 3;
     pointer-events: none;
 }
 
+#square {
+    border-radius: '20%';
+    width: '2vw';
+    height: '2vw';
+    z-index: '1';
+    background-color: '#e65252';
+    position: 'absolute';
+}
