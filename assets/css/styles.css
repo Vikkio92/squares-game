@@ -96,8 +96,8 @@ body {
     
     #square {
         border-radius: 20%;
-        width: clamp(1rem, 2vh, 2rem);
-        height: clamp(1rem, 2vh, 2rem);
+        width: clamp(2rem, 4vh, 4rem);
+        height: clamp(2rem, 4vh, 4rem);
         z-index: 1;
         background-color: #e65252;
         position: absolute;

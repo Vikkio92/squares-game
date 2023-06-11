@@ -103,7 +103,7 @@ function startGame() {
   isGameOn = 1;
   fireAgain = false;
   level = 1;
-  lives = 1;
+  lives = 5;
   points = 0;
   squareSpeed = 4;
   // Title
