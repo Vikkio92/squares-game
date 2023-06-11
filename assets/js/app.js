@@ -29,14 +29,6 @@ var gridTopBorder = gridTopLeftY;
 var gridRightBorder = gridTopLeftX + gridWidth;
 var gridBottomBorder = gridTopLeftY + gridHeight;
 
-// console.log('viewportHeight: ' + viewportHeight);
-// console.log('viewportWidth: ' + viewportWidth);
-// console.log('gridLeft: ' + gridLeftBorder);
-// console.log('gridTop: ' + gridTopBorder);
-// console.log('gridRight: ' + gridRightBorder);
-// console.log('gridBottom: ' + gridBottomBorder);
-
-
 // Display edges - FOR TESTING PURPOSES ONLY
 // test2 = document.createElement('div')
 // test2.style.width = gridWidth + 'px';
@@ -68,16 +60,7 @@ window.addEventListener('resize', () => {
   gridTopBorder = gridTopLeftY;
   gridRightBorder = gridTopLeftX + gridWidth;
   gridBottomBorder = gridTopLeftY + gridHeight;
-
-  // Display edges - FOR TESTING PURPOSES ONLY
-  grid.removeChild(test2)
-  test2 = document.createElement('div')
-  test2.style.width = gridWidth + 'px';
-  test2.style.height = gridHeight + 'px';
-  test2.style.border = '1px solid black';
-  grid.appendChild(test2);
-
-})
+});
 
 
 // Initialise button to start the game
@@ -177,9 +160,18 @@ function levelUp() {
 // Lose a life if you miss a square and check if game over
 function loseLife() {
 
-  console.log(square.style.left);
-  console.log(square.style.top);
-
+  // FOR DEBUGGING
+  let rightPos = parseFloat(square.style.left) + square.offsetWidth;
+  let bottomPos = parseFloat(square.style.top) + square.offsetHeight;
+  if (parseFloat(square.style.left) < 0) {
+    console.log('LEFT')
+  } else if (parseFloat(square.style.top) < 0) {
+    console.log('TOP')
+  } else if (rightPos > viewportWidth) {
+    console.log('RIGHT')
+  } else if (bottomPos > viewportHeight) {
+    console.log('BOTTOM')
+  }
   lives -= 1;
   document.querySelector('.lives').removeChild(document.querySelector('.lives').lastChild);
   document.body.removeChild(square);
@@ -193,35 +185,28 @@ function loseLife() {
 // Function that initialises the square and its initial position coordinates and direction, and displays it
 function fireSquare() {
   fireAgain = false;
-  // Style the square
-  // square.style.borderRadius = '20%';
-  // square.style.width = '2vw'; // Set the width of the square element to 2% of the viewport width
-  // square.style.height = '2vw'; // Set the height of the square element to 2% of the viewport width
-  // square.style.zIndex = '1'; // Set the z-index of the square element
-  // square.style.backgroundColor = '#e65252'; // Set the background color of the square element to red
-  // square.style.position = 'absolute'; // Set the position of the square element to absolute
+
+  // Add the square element to the page (needs to be done before setting the position otherwise square.offsetWidth and square.offsetHeight = 0)
+  document.body.appendChild(square);
+  square.addEventListener('click', scorePoint); // If the square is clicked while within the grid's bounds, score a point
 
   // Initalise position variables
   var startPosX;
   var startPosY;
 
-  // starting position X can fluctuate anywhere between 0% and 100% of the screen width
-  startPosX = Math.floor(Math.random() * viewportWidth);
+  // starting position X can fluctuate anywhere between 1 square width and 100% of the screen width - 1 square width
+  startPosX = Math.floor(Math.random() * (viewportWidth - 2 * square.offsetWidth)) + square.offsetWidth;
 
   // If starting position X > 10% and < 90% of screen width, then Y must be < 10% or > 90% of screen height
   if (startPosX > 0.1 * viewportWidth && startPosX < 0.9 * viewportWidth) {
-    startPosY = (Math.floor(Math.random() * heightBoundary) + (Math.random() < 0.5) * 0.9 * viewportHeight)
+    startPosY = (Math.floor(Math.random() * (heightBoundary - 2 * square.offsetHeight) + square.offsetHeight) + (Math.random() < 0.5) * (viewportHeight - heightBoundary)/viewportHeight * (viewportHeight))
   } else {
-    startPosY = Math.floor(Math.random() * viewportHeight)
+    startPosY = Math.floor(Math.random() * (viewportHeight - 2 * square.offsetHeight)) + square.offsetHeight;
   };
 
   // Set initial X and Y position for the square to be spawned
   square.style.left = startPosX + 'px'; // Set the left position of the square element to the random x-coordinate
   square.style.top = startPosY + 'px'; // Set the top position of the square element to the random y-coordinate
-
-  // Add the square element to the page
-  document.body.appendChild(square);
-  square.addEventListener('click', scorePoint); // If the square is clicked while within the grid's bounds, score a point
 
   // Initialise direction variables
   var directionX;
