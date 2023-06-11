@@ -178,6 +178,14 @@ body {
 }
 
 
+/* Make pointer coarse on phone and table */
+@media (max-width: 768px) {
+    body {
+        touch-action: manipulation;
+    }
+}
+
+
 /* Laptops */
 @media (min-width: 769px) and (max-width: 1024px) {
     h1 {
