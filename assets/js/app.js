@@ -1,5 +1,6 @@
 // Global variables
 const square = document.createElement('div');
+square.id = 'square';
 var isGameOn = 0;
 var fireAgain = false;
 var level = 1;
@@ -37,14 +38,46 @@ var gridBottomBorder = gridTopLeftY + gridHeight;
 
 
 // Display edges - FOR TESTING PURPOSES ONLY
-// var test = document.getElementById('grid');
 // test2 = document.createElement('div')
 // test2.style.width = gridWidth + 'px';
 // test2.style.height = gridHeight + 'px';
 // test2.style.border = '1px solid black';
-// test.appendChild(test2);
+// grid.appendChild(test2);
 // console.log(test2.offsetWidth);
 // console.log(test2.offsetHeight);
+
+
+// Resize grid and viewport variables upon resizing of the screen
+window.addEventListener('resize', () => {
+  // Calculate the left and right boundaries of the page
+  viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+  viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  heightBoundary = Math.floor(viewportHeight * 0.1); // 10% of viewport height
+
+  // Grid element
+  grid = document.getElementById('grid');
+  gridWidth = grid.offsetWidth; // in px
+  gridHeight = grid.offsetHeight; // in px
+
+  // Grid's top left corner coordinates
+  gridTopLeftX = (viewportWidth - gridWidth) / 2;
+  gridTopLeftY = (viewportHeight - gridHeight) / 2;
+
+  // Grid's edges
+  gridLeftBorder = gridTopLeftX;
+  gridTopBorder = gridTopLeftY;
+  gridRightBorder = gridTopLeftX + gridWidth;
+  gridBottomBorder = gridTopLeftY + gridHeight;
+
+  // Display edges - FOR TESTING PURPOSES ONLY
+  grid.removeChild(test2)
+  test2 = document.createElement('div')
+  test2.style.width = gridWidth + 'px';
+  test2.style.height = gridHeight + 'px';
+  test2.style.border = '1px solid black';
+  grid.appendChild(test2);
+
+})
 
 
 // Initialise button to start the game
@@ -63,43 +96,36 @@ startButton.addEventListener('click', () => {
 function startGame() {
   // Instructions
   document.querySelector('#instructions').innerHTML = "Destroy the little squares by clicking on them while they're within the boundaries of the grid.<br>Don't let any escape!";
-  
   // Grid
   grid.style.width = '40vh';
   grid.style.height = '40vh';
-  
   // Global variables
   isGameOn = 1;
   fireAgain = false;
   level = 1;
-  lives = 5;
+  lives = 1;
   points = 0;
   squareSpeed = 4;
-  
   // Title
   document.querySelector('.title').style.color = '#e65252';
-
   // Containers
   const livesContainer = document.querySelector('.lives');
   const scoreContainer = document.querySelector('.score');
   const levelContainer = document.querySelector('.level');
   // Lives
   livesContainer.innerHTML = 'Lives: ';
+  livesContainer.style.display = 'flex';
   for (let i = 0; i < lives; i++) { // append X number of life squares
     const life = document.createElement('div');
     life.className = 'life';
     livesContainer.appendChild(life);
   };
-  livesContainer.style.cssText  = 'display: flex; justify-content: center; color: rgb(118, 118, 118); margin: 1vh; z-index: inherit;';
-  livesContainer.style.fontSize = viewportHeight * 0.01 + 'px';
   // Score
   scoreContainer.innerHTML = 'Score: ' + points;
-  scoreContainer.style.cssText  = 'display: flex; justify-content: center; color: rgb(118, 118, 118); margin: 1vh; z-index: inherit;';
-  scoreContainer.style.fontSize = viewportHeight * 0.01 + 'px';
+  scoreContainer.style.display = 'flex';
   // Level
   levelContainer.innerHTML = 'Level: ' + level;
-  levelContainer.style.cssText  = 'display: flex; justify-content: center; color: rgb(118, 118, 118); margin: 1vh; z-index: inherit;';
-  levelContainer.style.fontSize = viewportHeight * 0.01 + 'px';
+  levelContainer.style.display = 'flex';
 
   fireSquare();
 };
@@ -168,12 +194,12 @@ function loseLife() {
 function fireSquare() {
   fireAgain = false;
   // Style the square
-  square.style.borderRadius = '20%';
-  square.style.width = '2vw'; // Set the width of the square element to 2% of the viewport width
-  square.style.height = '2vw'; // Set the height of the square element to 2% of the viewport width
-  square.style.zIndex = '1'; // Set the z-index of the square element
-  square.style.backgroundColor = '#e65252'; // Set the background color of the square element to red
-  square.style.position = 'absolute'; // Set the position of the square element to absolute
+  // square.style.borderRadius = '20%';
+  // square.style.width = '2vw'; // Set the width of the square element to 2% of the viewport width
+  // square.style.height = '2vw'; // Set the height of the square element to 2% of the viewport width
+  // square.style.zIndex = '1'; // Set the z-index of the square element
+  // square.style.backgroundColor = '#e65252'; // Set the background color of the square element to red
+  // square.style.position = 'absolute'; // Set the position of the square element to absolute
 
   // Initalise position variables
   var startPosX;
