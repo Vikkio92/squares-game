@@ -89,6 +89,7 @@ function startGame() {
   lives = 5;
   points = 0;
   squareSpeed = 4;
+  var topScore = localStorage.getItem('topScore');
   // Title
   document.querySelector('.title').style.color = '#e65252';
   // Containers
@@ -107,7 +108,7 @@ function startGame() {
   scoreContainer.innerHTML = 'Score: ' + points;
   scoreContainer.style.display = 'flex';
   // Level
-  levelContainer.innerHTML = 'Level: ' + level;
+  levelContainer.innerHTML = 'Level: ' + level + '<br>Your top score: ' + topScore;
   levelContainer.style.display = 'flex';
 
   fireSquare();
@@ -126,6 +127,8 @@ function endGame() {
   startButton.style.left = '50%';
   startButton.style.transform = 'translateX(-50%)';
   document.querySelector('.title').style.color = 'rgb(118, 118, 118)';
+  localStorage.setItem('topScore', Math.max(level, topScore));
+  topScore = localStorage.getItem('topScore');
 };
 
 
@@ -142,8 +145,8 @@ function scorePoint() {
       points += 1;
       document.querySelector('.score').innerHTML = 'Score: ' + points;
       fireAgain = true;
+      levelUp();
     };
-  levelUp();
 };
 
 
@@ -151,27 +154,65 @@ function scorePoint() {
 function levelUp() {
   if (points % 5 === 0) {
     level += 1;
-    squareSpeed +=1;
+    squareSpeed += 0.5;
     document.querySelector('.level').innerHTML = 'Level: ' + level;
-  }
+    // Reduce size of grid
+    grid.style.width = (grid.offsetWidth * 0.95) + 'px';
+    grid.style.height = (grid.offsetHeight * 0.95) + 'px';
+    gridWidth = grid.offsetWidth; // in px
+    gridHeight = grid.offsetHeight;
+    gridLeftBorder = gridTopLeftX;
+    gridTopBorder = gridTopLeftY;
+    gridRightBorder = gridTopLeftX + gridWidth;
+    gridBottomBorder = gridTopLeftY + gridHeight;
+    // Change text color based on level
+    var newColor;
+    switch (level % 11) {
+      case 1:
+        newColor = '#e65252';
+        break;
+      case 2:
+        newColor = '#ffce00';
+        break;
+      case 3:
+        newColor = '#52e652';
+        break;    
+      case 4:
+        newColor = '#ff6600';
+        break;
+      case 5:
+        newColor = '#b652e6';
+        break;
+      case 6:
+        newColor = '#00ffe5';
+        break;
+      case 7:
+        newColor = '#00ffe5';
+        break;
+      case 8:
+        newColor = '#ff00c8';
+        break;
+      case 9:
+        newColor = '#52bde6';
+        break;
+      case 10:
+        newColor = '#2e75b6';
+        break;
+    };
+    document.querySelector('.title').style.color = newColor;
+    var elements = document.getElementsByClassName('life');
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.background= newColor;
+        elements[i].style.border= newColor;
+    };
+    document.querySelector('#square').style.background = newColor;
+    document.querySelector('#square').style.border = newColor;
+  };
 };
 
 
 // Lose a life if you miss a square and check if game over
 function loseLife() {
-
-  // FOR DEBUGGING
-  let rightPos = parseFloat(square.style.left) + square.offsetWidth;
-  let bottomPos = parseFloat(square.style.top) + square.offsetHeight;
-  if (parseFloat(square.style.left) < 0) {
-    console.log('LEFT')
-  } else if (parseFloat(square.style.top) < 0) {
-    console.log('TOP')
-  } else if (rightPos > viewportWidth) {
-    console.log('RIGHT')
-  } else if (bottomPos > viewportHeight) {
-    console.log('BOTTOM')
-  }
   lives -= 1;
   document.querySelector('.lives').removeChild(document.querySelector('.lives').lastChild);
   document.body.removeChild(square);
