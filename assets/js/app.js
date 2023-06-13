@@ -144,7 +144,7 @@ function levelUp() {
   if (points % 5 === 0) {
     level += 1;
     squareSpeed += 0.5;
-    document.querySelector('.level').innerHTML = 'Level: ' + level;
+    document.querySelector('.level').innerHTML = 'Level: ' + level + '<br>Your top score: ' + topScore;
     // Reduce size of grid
     grid.style.width = (grid.offsetWidth * 0.95) + 'px';
     grid.style.height = (grid.offsetHeight * 0.95) + 'px';
