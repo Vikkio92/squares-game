@@ -7,6 +7,7 @@ var level = 1;
 var lives = 0;
 var points = 0;
 var squareSpeed = 4;
+var topScore = localStorage.getItem('topScore');
 
 
 // Calculate the left and right boundaries of the page
@@ -89,7 +90,6 @@ function startGame() {
   lives = 5;
   points = 0;
   squareSpeed = 4;
-  var topScore = localStorage.getItem('topScore');
   // Title
   document.querySelector('.title').style.color = '#e65252';
   // Containers
