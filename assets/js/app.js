@@ -7,7 +7,7 @@ var level = 1;
 var lives = 0;
 var points = 0;
 var squareSpeed = 4;
-if (localStorage.getItem('topScore') = Nan) {
+if (localStorage.getItem('topScore') === Nan) {
   var topScore = localStorage.setItem('topScore', 1);
 } else {
   var topScore = localStorage.setItem('topScore', Math.max(level, topScore));
