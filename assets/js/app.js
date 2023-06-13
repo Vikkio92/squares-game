@@ -7,7 +7,7 @@ var level = 1;
 var lives = 0;
 var points = 0;
 var squareSpeed = 4;
-var topScore = localStorage.getItem('topScore');
+var topScore = localStorage.setItem('topScore', 1);
 
 
 // Calculate the left and right boundaries of the page
