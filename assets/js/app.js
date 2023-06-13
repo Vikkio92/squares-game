@@ -7,12 +7,7 @@ var level = 1;
 var lives = 0;
 var points = 0;
 var squareSpeed = 4;
-if (localStorage.getItem('topScore') === NaN) {
-  localStorage.setItem('topScore', 1);
-} else {
-  localStorage.setItem('topScore', Math.max(level, topScore));
-};
-var topScore = localStorage.getItem('topScore');
+var topScore;
 
 
 // Calculate the left and right boundaries of the page
@@ -95,6 +90,12 @@ function startGame() {
   lives = 5;
   points = 0;
   squareSpeed = 4;
+  if (isNaN(topScore)) {
+    topScore = 1;
+  } else {
+    localStorage.setItem('topScore', Math.max(level, topScore));
+    topScore = localStorage.getItem('topScore');
+  }
   // Title
   document.querySelector('.title').style.color = '#e65252';
   // Containers
