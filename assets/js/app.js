@@ -7,7 +7,11 @@ var level = 1;
 var lives = 0;
 var points = 0;
 var squareSpeed = 4;
-var topScore = localStorage.setItem('topScore', Math.max(level, topScore));
+if (localStorage.getItem('topScore') = Nan) {
+  var topScore = localStorage.setItem('topScore', 1);
+} else {
+  var topScore = localStorage.setItem('topScore', Math.max(level, topScore));
+};
 
 
 // Calculate the left and right boundaries of the page
@@ -115,23 +119,6 @@ function startGame() {
 };
 
 
-// End the game when lives reach zero
-function endGame() {
-  document.querySelector('#instructions').innerHTML = 'Game over! Play again?';
-  document.querySelector('.lives').style.display = 'none';
-  document.querySelector('.score').style.display = 'none';
-  document.querySelector('.level').style.display = 'none';
-  const startButton = document.getElementById('button-start');
-  startButton.style.display  = 'block';
-  startButton.style.position = 'absolute';
-  startButton.style.left = '50%';
-  startButton.style.transform = 'translateX(-50%)';
-  document.querySelector('.title').style.color = 'rgb(118, 118, 118)';
-  localStorage.setItem('topScore', Math.max(level, topScore));
-  topScore = localStorage.getItem('topScore');
-};
-
-
 // When the user clicks the square while it's within bounds, score a point, remove the square and fire off another
 function scorePoint() {
   var squareLeft = parseInt(square.style.left);
@@ -220,6 +207,23 @@ function loseLife() {
     isGameOn = 0;
     endGame();
   }
+};
+
+
+// End the game when lives reach zero
+function endGame() {
+  document.querySelector('#instructions').innerHTML = 'Game over! Play again?';
+  document.querySelector('.lives').style.display = 'none';
+  document.querySelector('.score').style.display = 'none';
+  document.querySelector('.level').style.display = 'none';
+  const startButton = document.getElementById('button-start');
+  startButton.style.display  = 'block';
+  startButton.style.position = 'absolute';
+  startButton.style.left = '50%';
+  startButton.style.transform = 'translateX(-50%)';
+  document.querySelector('.title').style.color = 'rgb(118, 118, 118)';
+  localStorage.setItem('topScore', Math.max(level, topScore));
+  topScore = localStorage.getItem('topScore');
 };
 
 
