@@ -8,10 +8,11 @@ var lives = 0;
 var points = 0;
 var squareSpeed = 4;
 if (localStorage.getItem('topScore') === NaN) {
-  var topScore = localStorage.setItem('topScore', 1);
+  localStorage.setItem('topScore', 1);
 } else {
-  var topScore = localStorage.setItem('topScore', Math.max(level, topScore));
+  localStorage.setItem('topScore', Math.max(level, topScore));
 };
+var topScore = localStorage.getItem('topScore');
 
 
 // Calculate the left and right boundaries of the page
