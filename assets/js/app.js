@@ -7,7 +7,7 @@ var level = 1;
 var lives = 0;
 var points = 0;
 var squareSpeed = 4;
-var topScore;
+var topScore = localStorage.getItem('topScore');
 
 
 // Calculate the left and right boundaries of the page
@@ -91,9 +91,9 @@ function startGame() {
   points = 0;
   squareSpeed = 4;
   if (isNaN(topScore)) {
-    topScore = 1;
+    topScore = 0;
   } else {
-    localStorage.setItem('topScore', Math.max(level, topScore));
+    localStorage.setItem('topScore', Math.max(points, topScore));
     topScore = localStorage.getItem('topScore');
   }
   // Title
@@ -111,10 +111,10 @@ function startGame() {
     livesContainer.appendChild(life);
   };
   // Score
-  scoreContainer.innerHTML = 'Score: ' + points;
+  scoreContainer.innerHTML = 'Score: ' + points + '<br>Your top score: ' + topScore;
   scoreContainer.style.display = 'flex';
   // Level
-  levelContainer.innerHTML = 'Level: ' + level + '<br>Your top score: ' + topScore;
+  levelContainer.innerHTML = 'Level: ' + level;
   levelContainer.style.display = 'flex';
 
   fireSquare();
@@ -132,7 +132,10 @@ function scorePoint() {
     squareTop <= gridBottomBorder
     ) {
       points += 1;
-      document.querySelector('.score').innerHTML = 'Score: ' + points;
+      localStorage.setItem('topScore', Math.max(points, topScore));
+      topScore = localStorage.getItem('topScore');
+      document.querySelector('.score').innerHTML = 'Score: ' + points + '<br>Your top score: ' + topScore;
+      document.querySelector('.level').innerHTML = 'Level: ' + level;
       fireAgain = true;
       levelUp();
     };
@@ -144,7 +147,6 @@ function levelUp() {
   if (points % 5 === 0) {
     level += 1;
     squareSpeed += 0.5;
-    document.querySelector('.level').innerHTML = 'Level: ' + level + '<br>Your top score: ' + topScore;
     // Reduce size of grid
     grid.style.width = (grid.offsetWidth * 0.95) + 'px';
     grid.style.height = (grid.offsetHeight * 0.95) + 'px';
@@ -188,6 +190,7 @@ function levelUp() {
         newColor = '#2e75b6';
         break;
     };
+    gainLife();
     document.querySelector('.title').style.color = newColor;
     var elements = document.getElementsByClassName('life');
     for (let i = 0; i < elements.length; i++) {
@@ -204,10 +207,23 @@ function levelUp() {
 function loseLife() {
   lives -= 1;
   document.querySelector('.lives').removeChild(document.querySelector('.lives').lastChild);
-  document.body.removeChild(square);
   if (lives === 0) {
+    document.querySelector('#square').style.background = '#e65252';
+    document.body.removeChild(square);
     isGameOn = 0;
     endGame();
+  }
+};
+
+
+// Gain extra life on level up
+function gainLife() {
+  if (lives < 5) {
+    lives = Math.min(lives + 1,  5);
+    const livesContainer = document.querySelector('.lives');
+    const life = document.createElement('div');
+    life.className = 'life';
+    livesContainer.appendChild(life);
   }
 };
 
