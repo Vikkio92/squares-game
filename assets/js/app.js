@@ -4,6 +4,7 @@ square.id = 'square';
 var isGameOn = 0;
 var fireAgain = false;
 var level = 1;
+const levelUpScalar = 0.9;
 var lives = 0;
 var points = 0;
 var squareSpeed = 4;
@@ -152,8 +153,8 @@ function levelUp() {
     level += 1;
     squareSpeed += 0.5;
     // Reduce size of grid
-    grid.style.width = (grid.offsetWidth * 0.95) + 'px';
-    grid.style.height = (grid.offsetHeight * 0.95) + 'px';
+    grid.style.width = (grid.offsetWidth * levelUpScalar) + 'px';
+    grid.style.height = (grid.offsetHeight * levelUpScalar) + 'px';
     gridWidth = grid.offsetWidth; // in px
     gridHeight = grid.offsetHeight;
     gridLeftBorder = gridTopLeftX;
@@ -306,8 +307,8 @@ function fireSquare() {
   var angle = Math.atan2(deltaY, deltaX);
 
   // Calculate the direction
-  var directionX = Math.cos(angle) + Math.random() * 0.3 - 0.2; // add a random value between -0.2 and 0.2
-  var directionY = Math.sin(angle) + Math.random() * 0.3 - 0.2;
+  var directionX = Math.cos(angle) + (Math.random() * 0.4 - 0.2) * Math.pow(levelUpScalar, level-1); // add a random value between -0.2 and 0.2, reduce it as the grid decreases in size
+  var directionY = Math.sin(angle) + (Math.random() * 0.4 - 0.2) * Math.pow(levelUpScalar, level-1);
 
   // Normalize the direction vector
   var magnitude = Math.sqrt(directionX * directionX + directionY * directionY);
