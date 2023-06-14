@@ -8,7 +8,7 @@
     --primary-color: rgb(118, 118, 118); /* text */
     --secondary-color: #e65252; /* square and lives */
     /*--grid-color: #2e75b6;*/
-  }
+}
     
 html {
     scroll-behavior: smooth;
@@ -93,6 +93,7 @@ body {
         height: 40vh;
         z-index: 3;
         pointer-events: none;
+        transition: width 3s ease, height 3s ease; /* smooth transtion when the grid gets smaller */
     }
     
     #square {
@@ -167,6 +168,7 @@ body {
         height: 40vh;
         z-index: 3;
         pointer-events: none;
+        transition: width 3s ease, height 3s ease; /* smooth transtion when the grid gets smaller */
     }
     
     #square {
@@ -248,6 +250,7 @@ body {
         height: 40vh;
         z-index: 3;
         pointer-events: none;
+        transition: width 3s ease, height 3s ease; /* smooth transtion when the grid gets smaller */
     }
     
     #square {
@@ -320,6 +323,7 @@ body {
         height: 40vh;
         z-index: 3;
         pointer-events: none;
+        transition: width 3s ease, height 3s ease; /* smooth transtion when the grid gets smaller */
     }
     
     #square {
@@ -330,4 +334,10 @@ body {
         background-color: #e65252;
         position: absolute;
     }
+}
+
+
+@keyframes fadeAndMoveUp {
+    0% { opacity: 1; top: 50%; }
+    100% { opacity: 0; top: 20%; }
 }

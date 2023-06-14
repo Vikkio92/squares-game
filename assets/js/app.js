@@ -8,6 +8,8 @@ var lives = 0;
 var points = 0;
 var squareSpeed = 4;
 var topScore = localStorage.getItem('topScore');
+var scoredSquareLeft; // left position of the square the last time a point was scored
+var scoredSquareTop; // top position of the square the last time a point was scored
 
 
 // Calculate the left and right boundaries of the page
@@ -125,6 +127,8 @@ function startGame() {
 function scorePoint() {
   var squareLeft = parseInt(square.style.left);
   var squareTop = parseInt(square.style.top);
+  scoredSquareLeft = squareLeft;
+  scoredSquareTop = squareTop;
   if (
     squareLeft <= gridRightBorder &&
     squareLeft >= gridLeftBorder &&
@@ -224,6 +228,21 @@ function gainLife() {
     const life = document.createElement('div');
     life.className = 'life';
     livesContainer.appendChild(life);
+    // 1UP animation
+    const message = document.createElement('div');
+    document.body.appendChild(message);
+    message.innerHTML = '1UP';
+    message.style.position = 'absolute';
+    message.style.left = scoredSquareLeft + 'px';
+    message.style.top = scoredSquareTop + 'px';
+    message.style.background = '#00FF00';
+    const regularText = document.querySelector('.content');
+    var fontSize = window.getComputedStyle(regularText).fontSize;
+    message.style.fontSize = parseInt(fontSize) * 2 + 'px';
+    message.style.borderRadius = '20%';
+    message.style.color = '#FFFFFF';
+    message.style.zIndex = '5';
+    message.style.animation = 'fadeAndMoveUp 1.5s forwards 1';
   }
 };
 
