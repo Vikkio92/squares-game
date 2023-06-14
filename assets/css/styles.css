@@ -87,6 +87,7 @@ body {
     
     .grid {
         position: relative;
+        top: 5vh;
         background: url(../icons/squares.png) 50% / cover;
         width: 40vh;
         height: 40vh;
@@ -160,6 +161,7 @@ body {
     
     .grid {
         position: relative;
+        top: 5vh;
         background: url(../icons/squares.png) 50% / cover;
         width: 40vh;
         height: 40vh;
